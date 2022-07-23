@@ -35,26 +35,18 @@ func (ln *ListNode) String() string {
 	}
 	return fmt.Sprintf("%d->%s", ln.Val, ln.Next)
 }
-
 func reverseList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 
-	cur := head
 	var prev *ListNode
-	for {
-		if cur.Next == nil {
-			// This is the new head
-			cur.Next = prev
-			return cur
-		}
 
-		// Update
-		fmt.Println("cur, cur.Next, prev", cur.Next, prev, cur)
-
-		cur, cur.Next, prev = cur.Next, prev, cur
+	for head != nil {
+		head, head.Next, prev = head.Next, prev, head
 	}
+
+	return prev
 }
 
 func buildLL(input []int) *ListNode {
