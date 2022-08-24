@@ -3,16 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	/*
-	   Input: nums = [-1,0,3,5,9,12], target = 9
-	   Output: 4
-	   Explanation: 9 exists in nums and its index is 4
-	   Example 2:
-
-	   Input: nums = [-1,0,3,5,9,12], target = 2
-	   Output: -1
-	*/
-
 	testCases := []struct {
 		input  []int
 		target int
@@ -128,8 +118,6 @@ func search(nums []int, target int) int {
 	lower, upper := 0, len(nums)-1
 	for {
 		mid := ((upper - lower) / 2) + lower
-		// fmt.Println("nums=", nums, "target=", target)
-		// fmt.Printf("For(lower=%d mid=%d upper=%d\n", lower, mid, upper)
 		if mid == upper && lower == mid && nums[mid] != target {
 			return NotFound
 		}
