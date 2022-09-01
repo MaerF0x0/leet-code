@@ -1,12 +1,11 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type tCase struct {
 	in       []int
 	k        int
+	t        int
 	expected bool
 }
 
@@ -27,35 +26,35 @@ func main() {
 			k:        2,
 			expected: false,
 		},
-		// { // edgeCase k=0 ?
-		// 	in:       []int{0, 0},
-		// 	k:        0,
-		// 	expected: false,
-		// },
-		// { // edgeCase k > len(in) ?
-		// 	in:       []int{0, 1, 3, 4, 0},
-		// 	k:        10,
-		// 	expected: true,
-		// },
-		// { // edgeCase duplicate at end
-		// 	in:       []int{0, 1, 2, 3, 4, 5, 6, 5},
-		// 	k:        2,
-		// 	expected: true,
-		// },
+		{ // edgeCase k=0 ?
+			in:       []int{0, 0},
+			k:        0,
+			expected: false,
+		},
+		{ // edgeCase k > len(in) ?
+			in:       []int{0, 1, 3, 4, 0},
+			k:        10,
+			expected: true,
+		},
+		{ // edgeCase duplicate at end
+			in:       []int{0, 1, 2, 3, 4, 5, 6, 5},
+			k:        2,
+			expected: true,
+		},
 	}
 
-	// allCase := tCase{expected: false}
-	// for i := -109; i <= 109; i++ {
-	// 	allCase.in = append(allCase.in, i)
-	// }
+	allCase := tCase{expected: false}
+	for i := -109; i <= 109; i++ {
+		allCase.in = append(allCase.in, i)
+	}
 
-	// duplcase := tCase{
-	// 	in:       append(allCase.in, 109),
-	// 	k:        25, // they're side by side at the end
-	// 	expected: true,
-	// }
+	duplcase := tCase{
+		in:       append(allCase.in, 109),
+		k:        25, // they're side by side at the end
+		expected: true,
+	}
 
-	// tCases = append(tCases, allCase, duplcase)
+	tCases = append(tCases, allCase, duplcase)
 
 	for _, tcase := range tCases {
 		actual := containsNearbyDuplicate(tcase.in, tcase.k)
@@ -92,12 +91,11 @@ func containsNearbyDuplicate(nums []int, k int) bool {
 	// next we need to slide the window
 
 	// NB: j retains it's value from previous for loop
-	j-- // make the width between i-j inclusive == k
-	for ; j < len(nums); i, j = i+1, j+1 {
+	for ; j < len(nums); j++ {
 		if _, ok := seen[nums[j]]; ok {
 			return true
 		}
-		delete(seen, nums[i]) // remove one number from the sliding map we dont worry about duplicates, that's the point
+		delete(seen, i) // remove one number from the sliding map we dont worry about duplicates, that's the point
 		seen[nums[j]] = struct{}{}
 	}
 
